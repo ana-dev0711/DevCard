@@ -4,11 +4,11 @@ Aplicativo mobile desenvolvido com React Native e Expo Router.
 
 ## Funcionalidades
 
-- Tela de boas-vindas
-- Cadastro com validação
-- Preview do cartão
-- Tela de sucesso
-- Navegação com Expo Router
+1- Tela de boas-vindas
+2- Cadastro com validação
+3- Preview do cartão
+4- Tela de sucesso
+5- Navegação com Expo Router
 
 ## Tecnologias utilizadas
 
