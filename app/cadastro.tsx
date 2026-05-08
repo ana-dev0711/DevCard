@@ -82,7 +82,7 @@ export default function Cadastro() {
         value={nome}
         onChangeText={setNome}
       />
-      {erroNome ? <Text style={styles.erro}>{erroNome}</Text> : null}
+      {mensagemNome ? <Text style={styles.erro}>{erroNome}</Text> : null}
 
       <Text style={styles.label}>Cargo</Text>
       <TextInput
@@ -90,7 +90,7 @@ export default function Cadastro() {
         value={cargo}
         onChangeText={setCargo}
       />
-      {erroCargo ? <Text style={styles.erro}>{erroCargo}</Text> : null}
+      {mensagemCargo ? <Text style={styles.erro}>{erroCargo}</Text> : null}
 
       <Text style={styles.label}>Empresa</Text>
       <TextInput
@@ -106,7 +106,7 @@ export default function Cadastro() {
         onChangeText={setAnos}
         keyboardType="numeric"
       />
-      {erroAnos ? <Text style={styles.erro}>{erroAnos}</Text> : null}
+      {mensagemAnos ? <Text style={styles.erro}>{erroAnos}</Text> : null}
 
       <Text style={styles.label}>Tecnologia favorita</Text>
       <TextInput
@@ -114,7 +114,7 @@ export default function Cadastro() {
         value={tecnologia}
         onChangeText={setTecnologia}
       />
-      {erroTecnologia ? (
+      {erroTech ? (
         <Text style={styles.erro}>{erroTecnologia}</Text>
       ) : null}
 
@@ -139,16 +139,16 @@ export default function Cadastro() {
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={[
-            styles.corBotao,
-            cor === "verde" && styles.corSelecionada,
+         style={[
+           styles.corBotao,
+           cor === "verde" && styles.corSelecionada,
           ]}
           onPress={() => setCor("verde")}
         >
-               <View
-                   style={[
-                       styles.bolinha,
-                       { backgroundColor: "#2ECC71" },
+            <View
+                 style={[
+                     styles.bolinha,
+                   { backgroundColor: "#2ECC71" },
                 ]}
             />
 
@@ -162,13 +162,12 @@ export default function Cadastro() {
           ]}
           onPress={() => setCor("roxo")}
         >
-            <View
-                style={[
-                    styles.bolinha,
-                    { backgroundColor: "#9B59B6" },
-                ]}
-            />
-
+           <View
+               style={[
+                   styles.bolinha,
+                  { backgroundColor: "#9B59B6" },
+               ]}
+           />
           <Text>Roxo</Text>
         </TouchableOpacity>
       </View>
@@ -259,5 +258,4 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     marginRight: 8,
   },
-
 });
