@@ -1,76 +1,60 @@
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-} from "react-native";
-
-import { router } from "expo-router";
+import {View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { router} from "expo-router";
 
 export default function Sucesso() {
   return (
     <View style={styles.container}>
-      <Text style={styles.icone}>✅</Text>
-
-      <Text style={styles.titulo}>
-        Cartão criado com sucesso!
-      </Text>
-
-      <Text style={styles.subtitulo}>
-        Seu cartão de visita digital está pronto.
-      </Text>
-
+      <Text style={styles.logo}>OK</Text>
+      <Text style={styles.titulo}>Cartão criado!</Text>
+      <Text style={styles.texto}>Seu DevCard foi criada com sucesso.</Text>
       <TouchableOpacity
         style={styles.botao}
-        onPress={() => router.replace("/")}
-      >
-        <Text style={styles.botaoTexto}>
-          Criar outro cartão
-        </Text>
-      </TouchableOpacity>
-    </View>
+        onPress={() =>
+        router.replace("/")}>
+          <Text style={styles.botaoTexto}>Criado outro</Text>
+          </TouchableOpacity>
+          </View>
   );
 }
-
-const styles = StyleSheet.create({
+const styles = StyleSheet.create( {
   container: {
     flex: 1,
-    backgroundColor: "#F5F5F5",
     justifyContent: "center",
     alignItems: "center",
-    padding: 24,
+    backgroundColor: "#f5f5f5",
+    padding: 20,
   },
 
-  icone: {
-    fontSize: 90,
-    marginBottom: 30,
-  },
-
-  titulo: {
-    fontSize: 28,
+  logo: {
+    fontSize: 40,
     fontWeight: "bold",
-    textAlign: "center",
-    marginBottom: 16,
+    color: "#6c63ff",
   },
 
-  subtitulo: {
-    fontSize: 16,
-    color: "#666",
-    textAlign: "center",
-    marginBottom: 50,
+  titulo:{
+    fontSize: 30,
+    fontWeight: "bold",
+    marginTop: 20,
   },
 
-  botao: {
-    backgroundColor: "#6C63FF",
+  texto:{
+    marginTop: 10,
+    color: "gray",
+    textAlign: "center",
+  },
+
+  botao:{
+    backgroundColor: "#6c63ff",
     width: "100%",
-    padding: 18,
-    borderRadius: 12,
+    padding: 15,
+    borderRadius: 10,
     alignItems: "center",
+    marginTop: 40,
+  },
+ 
+  botaoTexto: {
+    color: "white",
+    fontWeight: "bold",
   },
 
-  botaoTexto: {
-    color: "#FFF",
-    fontWeight: "bold",
-    fontSize: 16,
-  },
 });
