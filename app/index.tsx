@@ -1,22 +1,17 @@
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { router } from "expo-router";
 
-export default function Home() {
+export default function Index() {
   return (
     <View style={styles.container}>
-      <Text style={styles.logo}>💳</Text>
-
-      <Text style={styles.title}>DevCard</Text>
-
-      <Text style={styles.subtitle}>
-        Seu cartão de visita digital de dev mobile
-      </Text>
-
+      <Text style={styles.logo}>Dev</Text>
+      <Text style={styles.titulo}>DevCard</Text>
+      <Text style={styles.texto}> Monte seu cartão digital de desenvolvedor mobile</Text>
       <TouchableOpacity
-        style={styles.button}
-        onPress={() => router.push("/cadastro")}
+      style={styles.botao}
+      onPress={() => router.push("/cadastro")}
       >
-        <Text style={styles.buttonText}>Criar meu cartão</Text>
+        <Text style={styles.botaoTexto}>Começar</Text>
       </TouchableOpacity>
     </View>
   );
@@ -25,42 +20,41 @@ export default function Home() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F5F5F5",
     justifyContent: "center",
     alignItems: "center",
-    padding: 24,
+    padding: 20,
+    backgroundColor: "#f5f5f5",
   },
 
   logo: {
-    fontSize: 80,
-    marginBottom: 20,
-  },
-
-  title: {
-    fontSize: 42,
+    fontSize: 45,
     fontWeight: "bold",
-    color: "#6C63FF",
+    color: "#6c63ff",
   },
 
-  subtitle: {
-    fontSize: 16,
-    color: "#666",
-    textAlign: "center",
+  titulo: {
+    fontSize: 35,
+    fontWeight: "bold",
     marginTop: 10,
-    marginBottom: 60,
+    color: "#6c63ff",
   },
 
-  button: {
-    backgroundColor: "#6C63FF",
+  texto: {
+    marginTop: 10,
+    textAlign: "center",
+    color: "gray",
+  },
+  botao: {
+    backgroundColor: "#6c63ff",
     width: "100%",
-    padding: 18,
-    borderRadius: 12,
+    padding: 15,
+    borderRadius: 10,
+    marginTop: 40,
     alignItems: "center",
   },
-
-  buttonText: {
-    color: "#FFF",
-    fontSize: 16,
+  botaoTexto:{
+    color: "white",
     fontWeight: "bold",
   },
+
 });
