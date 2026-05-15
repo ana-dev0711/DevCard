@@ -1,12 +1,14 @@
+
 import { useState } from "react";
 import {
   View,
   Text,
-  TextInput,
+ TextInput,
   TouchableOpacity,
   StyleSheet,
   ScrollView,
 } from "react-native";
+
 import { router } from "expo-router";
 
 export default function Cadastro() {
@@ -16,166 +18,133 @@ export default function Cadastro() {
   const [anos, setAnos] = useState("");
   const [tecnologia, setTecnologia] = useState("");
   const [cor, setCor] = useState("");
+  const [erro, setErro] = useState("");
 
-  const [erroNome, setErroNome] = useState("");
-  const [erroCargo, setErroCargo] = useState("");
-  const [erroAnos, setErroAnos] = useState("");
-  const [erroTecnologia, setErroTecnologia] = useState("");
-  const [erroCor, setErroCor] = useState("");
-
-  function validar() {
-    let valido = true;
-
-    setErroNome("");
-    setErroCargo("");
-    setErroAnos("");
-    setErroTecnologia("");
-    setErroCor("");
-
-    if (nome.trim().length < 3) {
-      setErroNome("Nome deve ter pelo menos 3 caracteres");
-      valido = false;
+  function validarCadastro() {
+    if (nome.length < 3) {
+      setErro("Digite um nome válido");
+      return;
     }
 
-    if (!cargo.trim()) {
-      setErroCargo("Cargo obrigatório");
-      valido = false;
+    if (!cargo || !anos || !tecnologia || !cor) {
+      setErro("Preencha os campos obrigatórios");
+      return;
     }
 
-    if (!anos || Number(anos) <= 0) {
-      setErroAnos("Digite um número maior que 0");
-      valido = false;
-    }
+    setErro("");
 
-    if (!tecnologia.trim()) {
-      setErroTecnologia("Tecnologia obrigatória");
-      valido = false;
-    }
-
-    if (!cor) {
-      setErroCor("Selecione uma cor");
-      valido = false;
-    }
-
-    if (valido) {
-      router.push({
-        pathname: "/preview",
-        params: {
-          nome,
-          cargo,
-          empresa,
-          anos,
-          tecnologia,
-          cor,
-        },
-      });
-    }
+    router.push({
+      pathname: "/preview",
+      params: {
+        nome,
+        cargo,
+        empresa,
+        anos,
+        tecnologia,
+        cor,
+      },
+    });
   }
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>Cadastro</Text>
+      <Text style={styles.titulo}>Cadastro</Text>
 
-      <Text style={styles.label}>Nome completo</Text>
+      <Text>Nome</Text>
       <TextInput
         style={styles.input}
         value={nome}
         onChangeText={setNome}
       />
-      {mensagemNome ? <Text style={styles.erro}>{erroNome}</Text> : null}
 
-      <Text style={styles.label}>Cargo</Text>
+      <Text>Cargo</Text>
       <TextInput
         style={styles.input}
         value={cargo}
         onChangeText={setCargo}
       />
-      {mensagemCargo ? <Text style={styles.erro}>{erroCargo}</Text> : null}
 
-      <Text style={styles.label}>Empresa</Text>
+      <Text>Empresa</Text>
       <TextInput
         style={styles.input}
         value={empresa}
         onChangeText={setEmpresa}
       />
 
-      <Text style={styles.label}>Anos de experiência</Text>
+      <Text>Anos de Experiência</Text>
       <TextInput
         style={styles.input}
+        keyboardType="numeric"
         value={anos}
         onChangeText={setAnos}
-        keyboardType="numeric"
       />
-      {mensagemAnos ? <Text style={styles.erro}>{erroAnos}</Text> : null}
 
-      <Text style={styles.label}>Tecnologia favorita</Text>
+      <Text>Tecnologia favorita</Text>
       <TextInput
         style={styles.input}
         value={tecnologia}
         onChangeText={setTecnologia}
       />
-      {erroTech ? (
-        <Text style={styles.erro}>{erroTecnologia}</Text>
-      ) : null}
 
-      <Text style={styles.label}>Cor do cartão</Text>
+      <Text style={{ marginTop: 10 }}>
+        Escolha uma cor
+      </Text>
 
-      <View style={styles.coresContainer}>
+      <View style={styles.cores}>
         <TouchableOpacity
-          style={[
-            styles.corBotao,
-            cor === "azul" && styles.corSelecionada,
-          ]}
+          style={styles.corBtn}
           onPress={() => setCor("azul")}
         >
-            <View
-                style={[
-                    styles.bolinha,
-                    { backgroundColor:"#3498DB" },
-                ]}
-            />
+          <View
+            style={[
+              styles.bolinha,
+              { backgroundColor: "blue" },
+            ]}
+          />
 
           <Text>Azul</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-         style={[
-           styles.corBotao,
-           cor === "verde" && styles.corSelecionada,
-          ]}
+          style={styles.corBtn}
           onPress={() => setCor("verde")}
         >
-            <View
-                 style={[
-                     styles.bolinha,
-                   { backgroundColor: "#2ECC71" },
-                ]}
-            />
+          <View
+            style={[
+              styles.bolinha,
+              { backgroundColor: "green" },
+            ]}
+          />
 
           <Text>Verde</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={[
-            styles.corBotao,
-            cor === "roxo" && styles.corSelecionada,
-          ]}
+          style={styles.corBtn}
           onPress={() => setCor("roxo")}
         >
-           <View
-               style={[
-                   styles.bolinha,
-                  { backgroundColor: "#9B59B6" },
-               ]}
-           />
+          <View
+            style={[
+              styles.bolinha,
+              { backgroundColor: "purple" },
+            ]}
+          />
+
           <Text>Roxo</Text>
         </TouchableOpacity>
       </View>
 
-      {erroCor ? <Text style={styles.erro}>{erroCor}</Text> : null}
+      {erro ? (
+        <Text style={styles.erro}>{erro}</Text>
+      ) : null}
 
-      <TouchableOpacity style={styles.botao} onPress={validar}>
-        <Text style={styles.botaoTexto}>Gerar Cartão</Text>
+      <TouchableOpacity
+        style={styles.botao}
+        onPress={validarCadastro}
+      >
+        <Text style={styles.botaoTexto}>
+          Gerar Cartão
+        </Text>
       </TouchableOpacity>
     </ScrollView>
   );
@@ -183,79 +152,65 @@ export default function Cadastro() {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 24,
-    backgroundColor: "#F5F5F5",
+    padding: 20,
+    backgroundColor: "#f5f5f5",
     flexGrow: 1,
   },
 
-  title: {
-    fontSize: 32,
+  titulo: {
+    fontSize: 30,
     fontWeight: "bold",
-    marginBottom: 30,
-    color: "#6C63FF",
-  },
-
-  label: {
-    fontSize: 14,
-    marginBottom: 8,
-    marginTop: 12,
-    fontWeight: "600",
+    marginBottom: 20,
+    color: "#6c63ff",
   },
 
   input: {
-    backgroundColor: "#FFF",
-    borderRadius: 10,
-    padding: 14,
-    borderWidth: 1,
-    borderColor: "#DDD",
+    backgroundColor: "white",
+    borderRadius: 8,
+    padding: 12,
+    marginTop: 5,
+    marginBottom: 15,
   },
 
-  erro: {
-    color: "red",
-    marginTop: 4,
-  },
-
-  coresContainer: {
+  cores: {
     flexDirection: "row",
     justifyContent: "space-between",
     marginTop: 10,
   },
 
-  corBotao: {
-    backgroundColor: "#FFF",
-    padding: 14,
-    borderRadius: 10,
+  corBtn: {
+    backgroundColor: "white",
     width: "30%",
-    alignItems: "center",
-    justifyContent: "center",
+    padding: 10,
+    borderRadius: 10,
     flexDirection: "row",
-    borderWidth: 1,
-    borderColor: "#DDD",
+    justifyContent: "center",
+    alignItems: "center",
   },
 
-  corSelecionada: {
-    borderColor: "#6C63FF",
-    borderWidth: 2,
+  bolinha: {
+    width: 12,
+    height: 12,
+    borderRadius: 10,
+    marginRight: 3,
+  },
+
+  erro: {
+    color: "red",
+    marginTop: 15,
   },
 
   botao: {
-    backgroundColor: "#6C63FF",
-    padding: 18,
-    borderRadius: 12,
+    backgroundColor: "#6c63ff",
+    padding: 15,
+    borderRadius: 10,
     alignItems: "center",
-    marginTop: 40,
+    marginTop: 30,
   },
 
   botaoTexto: {
-    color: "#FFF",
+    color: "white",
     fontWeight: "bold",
-    fontSize: 16,
-  },    
-
-  bolinha: {
-    width: 14,
-    height: 14,
-    borderRadius: 7,
-    marginRight: 8,
   },
 });
+
