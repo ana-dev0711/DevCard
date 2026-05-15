@@ -1,231 +1,143 @@
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-} from "react-native";
-
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { router, useLocalSearchParams } from "expo-router";
 
-export default function Preview() {
-  const {
-    nome,
-    cargo,
-    empresa,
-    anos,
-    tecnologia,
-    cor,
-  } = useLocalSearchParams<{
-    nome: string;
-    cargo: string;
-    empresa: string;
-    anos: string;
-    tecnologia: string;
-    cor: string;
-  }>();
+export default function Preview () {
+  const { nome, cargo, empresa, anos, tecnologia, cor } =
+useLocalSearchParams();
 
-  function corCartao() {
-    switch (cor) {
-      case "verde":
-        return "#2ECC71";
+let corCartao = "#3498db";
+if (cor === "verde") {
+  corCartao = "#2ecc71";
+}
 
-      case "roxo":
-        return "#9B59B6";
+if (cor === "roxo") {
+  corCartao = "#9b59b6";
+}
+ let nivel = "Júnior";
+ let badge = "#3498db";
 
-      default:
-        return "#4A90E2";
-    }
-  }
+ if (Number(anos) >= 3){
+  nivel = "Pleno";
+  badge = "#3498db";
+ }
 
-  function nivel() {
-    const experiencia = Number(anos);
+ if (Number (anos) >= 6){
+  nivel = "Sênior";
+  badge = "gold";
+ }
 
-    if (experiencia <= 2) {
-      return {
-        texto: "Júnior",
-        cor: "#95A5A6",
-      };
-    }
+ return (
+  <View style={styles.container}>
+    <Text style={styles.titulo}> Preview do Cartão</Text>
 
-    if (experiencia <= 5) {
-      return {
-        texto: "Pleno",
-        cor: "#3498DB",
-      };
-    }
-
-    return {
-      texto: "Sênior",
-      cor: "#F1C40F",
-    };
-  }
-
-  const badge = nivel();
-
-  return (
-    <View style={styles.container}>
-      <Text style={styles.titulo}>Seu Cartão</Text>
-
-      <View
-        style={[
-          styles.cartao,
-          {
-            backgroundColor: corCartao(),
-          },
-        ]}
-      >
-        <View style={styles.avatar}>
-          <Text style={styles.avatarTexto}>
-            {nome.charAt(0).toUpperCase()}
-          </Text>
-        </View>
-
-        <Text style={styles.nome}>{nome}</Text>
-
-        <Text style={styles.cargo}>
-          {cargo}
-          {empresa ? ` • ${empresa}` : ""}
-        </Text>
-
-        <Text style={styles.tecnologia}>
-          Especialista em {tecnologia}
-        </Text>
-
-        <View
-          style={[
-            styles.badge,
-            {
-              backgroundColor: badge.cor,
-            },
-          ]}
-        >
-          <Text style={styles.badgeTexto}>
-            {badge.texto}
-          </Text>
-        </View>
-
-        <Text style={styles.experiencia}>
-          {anos} anos de experiência
+    <View style={[styles.card, {backgroundColor: corCartao }]}>
+      <View style={styles.avatar}>
+        <Text style={styles.avatarTexto}>
+          {String(nome). charAt (0)}
         </Text>
       </View>
 
-      <TouchableOpacity
-        style={styles.botaoEditar}
-        onPress={() => router.back()}
-      >
-        <Text style={styles.textoEditar}>
-          Editar dados
-        </Text>
-      </TouchableOpacity>
+          <Text style={styles.nome}>{nome}</Text>
 
-      <TouchableOpacity
-        style={styles.botaoFinalizar}
-        onPress={() => router.replace("/sucesso")}
-      >
-        <Text style={styles.textoFinalizar}>
-          Finalizar
-        </Text>
+          <Text style={styles.info}>
+            {cargo} {empresa ? `- ${empresa}`: ""}
+            </Text>
+
+            <Text style={styles.tecnologia}>Curte desenvolver com {tecnologia}</Text>
+
+            <View style={[styles.badge, { backgroundColor: badge }]}>
+              <Text style={styles.badgeTexto} >{nivel}</Text>
+          </View>
+      </View>
+      <TouchableOpacity style={styles.editar} 
+      onPress={() => router.replace("/sucesso")}>
+        <Text style={{color: "roxo"}}>Finalizar</Text>
       </TouchableOpacity>
     </View>
-  );
+ );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F5F5F5",
-    padding: 24,
+    padding: 20,
+    backgroundColor: "#f5f5f5",
   },
 
   titulo: {
-    fontSize: 30,
+    fontSize: 28,
     fontWeight: "bold",
-    marginBottom: 30,
-  },
-
-  cartao: {
-    borderRadius: 24,
-    padding: 30,
-    alignItems: "center",
-    elevation: 8,
-  },
-
-  avatar: {
-    width: 90,
-    height: 90,
-    borderRadius: 45,
-    backgroundColor: "#FFF",
-    justifyContent: "center",
-    alignItems: "center",
     marginBottom: 20,
   },
 
+  card: {
+    padding: 25,
+    borderRadius: 20,
+    alignItems: "center",
+    minHeight: 300,
+    justifyContent: "center",
+  },
+
+  avatar: {
+    width: 80,
+    height: 80,
+    borderRadius: 50,
+    backgroundColor: "white",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 10,
+  },
+
   avatarTexto: {
-    fontSize: 36,
+    fontSize: 30,
     fontWeight: "bold",
-    color: "#333",
   },
 
   nome: {
-    fontSize: 28,
+    fontSize: 25,
+    color: "white",
     fontWeight: "bold",
-    color: "#FFF",
+    marginTop: 10,
   },
 
-  cargo: {
-    color: "#EEE",
-    marginTop: 8,
-    fontSize: 16,
+  info: {
+    color: "white",
+    marginTop: 10,
+    textAlign: "center",
   },
 
-  tecnologia: {
-    marginTop: 30,
-    color: "#FFF",
-    fontSize: 18,
-    fontWeight: "600",
+  tecnologia:{
+    color: "white",
+    marginTop: 10,
+    textAlign: "center",
   },
 
   badge: {
-    marginTop: 24,
+    marginTop: 20,
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 20,
   },
 
   badgeTexto: {
-    color: "#FFF",
+    color: "white",
     fontWeight: "bold",
   },
 
-  experiencia: {
-    marginTop: 16,
-    color: "#FFF",
-  },
-
-  botaoEditar: {
+  editar: {
+    borderWidth: 1,
+    borderColor: "#6c63ff",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
     marginTop: 30,
-    borderWidth: 2,
-    borderColor: "#6C63FF",
-    padding: 18,
-    borderRadius: 12,
+  },
+
+  finalizar: {
+    backgroundColor: "#6c63ff",
+    padding: 15,
+    borderRadius: 10,
     alignItems: "center",
-  },
-
-  textoEditar: {
-    color: "#6C63FF",
-    fontWeight: "bold",
-  },
-
-  botaoFinalizar: {
-    marginTop: 16,
-    backgroundColor: "#6C63FF",
-    padding: 18,
-    borderRadius: 12,
-    alignItems: "center",
-  },
-
-  textoFinalizar: {
-    color: "#FFF",
-    fontWeight: "bold",
+    marginTop: 15,
   },
 });
